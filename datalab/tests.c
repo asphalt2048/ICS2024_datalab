@@ -25,23 +25,29 @@ unsigned f2u(float f) {
   return a.u;
 }
 
-int test_tconst(void){
-  return 0xFFFFFFE0;
-}
-
 int test_bitNand(int x, int y){
   return ~(x&y);
 }
 
 int test_getByte(int x,int y){
-  return (x>>(8*y))&0xff;
+  union tests
+  {
+    int a;
+    char b[4];
+  }t;
+  t.a = x;
+  return 0xff&(int)t.b[y];
 }
 
 int test_roundUp(int x){
-  if(x < 0)
-    return x & ~255;
-  else
-    return (x + 255) & ~255;
+  if(x < 0){
+    return x - x%256;
+  }else{
+    if(x%256 == 0)
+      return x;
+    else 
+      return x - x%256 + 256;
+  }
 }
 
 int test_swapOddandEven(int x){
@@ -55,11 +61,6 @@ int test_swapOddandEven(int x){
   return even_bits | odd_bits;
 }
 
-int test_secondLowBit(int x){
-  int y=x-(x&-x);
-  return y&(-y);
-}
-
 int test_rotateNBits(int x, int n){
   n = n%32;
   int left_part = x<<n;
@@ -70,11 +71,10 @@ int test_rotateNBits(int x, int n){
 int test_fractions(int x){
   return x*7/16;
 }
-
-int test_biggerOrEqual(int x, int y){
-  return x >= y;
+int test_secondLowBit(int x){
+  int y=x-(x&-x);
+  return y&(-y);
 }
-
 int test_hdOverflow(int x,int y){
   long long res=(long long)x+(long long)y;
   return res>2147483647||res<-2147483648;
@@ -91,14 +91,6 @@ int test_overflowCalc(int x, int y, int z){
   w.a=z;
   long long res=(long long)u.b+(long long)v.b+(long long)w.b;
   return res>>32;
-}
-
-int test_partialFill(int l, int h) {
-  int ans=0;
-  for(int i=l;i<=h;++i){
-    if(i%2==0)ans+=1<<i;
-  }
-  return ans;
 }
 
 unsigned test_float_abs(unsigned uf) {
@@ -127,36 +119,16 @@ int test_bitNor(int x, int y){
   return ~(x|y);
 }
 
-int test_tmin(void) {
-  return 0x80000000;
+int test_tmax(void) {
+  return 0x7fffffff;
 }
 
 int test_absVal(int x){
   return x<0?-x:x;
 }
 
-int test_leastBitPos(int x){
-  return x&-x;
-}
-
-int test_greatestBitPos(int x){
-  if(!x)return 0;
-  for(int i=1;;i<<=1){
-    if(x&i){
-      x-=i;
-      if(!x)return i;
-    }
-  }
-  return -1;
-}
-
 int test_isLessOrEqual(int x, int y){
   return x <= y;
-}
-
-int test_multSevenSixteens(int x){
-  int low = x & 15;
-  return (x >> 4) * 7 + ((low * 7) >> 4);
 }
 
 int test_bitCount(int x) {
@@ -167,28 +139,24 @@ int test_bitCount(int x) {
   return result;
 }
 
+int test_mul3(int x){
+  if(x > 0x7fffffff/3)
+    return 0x7fffffff;
+  else if(x < (int)0x80000000/3)
+    return 0x80000000;
+  else 
+    return x*3;
+}
+
 int test_logicalShift(int x, int n) {
   unsigned u = (unsigned) x;
   unsigned shifted = u >> n;
   return (int) shifted;
 }
 
-int test_minusOne(void){
-  return -1;
-}
-
-unsigned test_float_neg(unsigned uf) {
-    float f = u2f(uf);
-    float nf = -f;
-    if (isnan(f))
- return uf;
-    else
- return f2u(nf);
-}
-
-unsigned test_float_twice(unsigned uf) {
+unsigned test_float_half(unsigned uf) {
   float f = u2f(uf);
-  float tf = 2*f;
+  float tf = f/2;
   if (isnan(f))
     return uf;
   else

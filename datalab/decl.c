@@ -10,10 +10,7 @@
 
 test_rec test_set[] = {
 
- {"tconst", (funct_t) tconst, (funct_t) test_tconst, 0, "! ~ & ^ | + << >>", 2, 1,
-  {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
-
- {"bitNand", (funct_t) bitNand, (funct_t) test_bitNand, 2, "~ |", 6, 2,
+ {"tmax", (funct_t) tmax, (funct_t) test_tmax, 0, "! ~ & ^ | + << >>", 2, 1,
   {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
 
  {"getByte", (funct_t) getByte, (funct_t) test_getByte, 2,
@@ -37,22 +34,13 @@ test_rec test_set[] = {
  {"fractions", (funct_t) fractions, (funct_t) test_fractions, 1, "! ~ & ^ | + << >>", 8, 5,
   {{0, 268435456},{TMin,TMax},{TMin,TMax}}},
 
- {"biggerOrEqual", (funct_t) biggerOrEqual, (funct_t) test_biggerOrEqual, 2,
-    "! ~ & ^ | + << >>", 24, 6,
-  {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
-
- {"hdOverflow", (funct_t) hdOverflow, (funct_t) test_hdOverflow, 2,
-    "! ~ & ^ | + << >>", 20, 6,
-  {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
-
  {"overflowCalc", (funct_t) overflowCalc, (funct_t) test_overflowCalc, 3,
     "! ~ & ^ | + << >>", 30, 7,
   {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
 
- {"partialFill", (funct_t) partialFill, (funct_t) test_partialFill, 2,
-    "! ~ & ^ | + << >>", 24, 8,
-  {{0, 15},{16,31},{TMin,TMax}}},
-
+ {"mul7", (funct_t) mul3, (funct_t) test_mul3, 1,
+    "! ~ & ^ | + << >>", 30, 7,
+  {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
 
 //float
  {"float_abs", (funct_t) float_abs, (funct_t) test_float_abs, 1,
@@ -61,7 +49,8 @@ test_rec test_set[] = {
  {"float_i2f", (funct_t) float_i2f, (funct_t) test_float_i2f, 1,
     "$", 40, 7,
      {{1, 1},{1,1},{1,1}}},
-
+ {"float_half", (funct_t)float_half, (funct_t)test_float_half, 1, 
+    "$", 32, 4, {{1, 1},{1,1},{1,1}}},
 
 
  {"oddParity", (funct_t) oddParity, (funct_t) test_oddParity, 1, "! ~ & ^ | + << >>", 56, 2,

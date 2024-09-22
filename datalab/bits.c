@@ -138,29 +138,27 @@ NOTES:
 
 //P1
 /* 
- * tconst - return a constant value 0xFFFFFFE0
+ * tmax - return a the biggest positive number that an integer can represent
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 2
  *   Rating: 1
  */
-int tconst(void) {
-  return 1;
+int tmax(void) {
+  return ~(1<<31);
 }
 
-
-//P2
+//p2
 /* 
- * bitImplication - return x->y using only ~ and | 
- *   Example: bitNand(4, 5) = -5, bitNand(3, 11) = -4
- *   Legal ops: ~ |
- *   Max ops: 6
+ * bitNor - ~(x|y) using only ~ and & 
+ *   Example: bitNor(4, 5) = -6, bitNor(-1,-2) = 0
+ *   Legal ops: ~ &
+ *   Max ops: 8
  *   Rating: 2
  */
-int bitImplication(int x, int y) {
-  return 2;
+int bitNor(int x, int y) {
+	return (~x)&(~y);
 }
 
-//change
 //P3
 /*
  * getByte - return the nth byte of x
@@ -175,7 +173,6 @@ int getByte(int x,int n) {
   //return 2;
 }
 
-//change
 //P4
 /* 
  * roundUp - round up x to the nearest multiple of 256
@@ -185,14 +182,55 @@ int getByte(int x,int n) {
  *   Rating: 3
  */
 int roundUp(int x) {
-    
-      int a = ~(x>>31);
-      return (x+(0xff & a)) & ~0xff;
+      return (x+(0xff)) & ~0xff;
     //return 3;
 }
 
-//change
-//P5
+//p5
+/*
+ * absVal - return the absolute value of x
+ *   Examples: absVal(-10) = 10
+ *			   absVal(5) = 5
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 6
+ *   Rating: 3
+ */
+int absVal(int x){
+    return (x^(x>>31))+((x>>31)&1);
+    //return 3;
+}
+
+//p6
+/* 
+ * isLessOrEqual - if x <= y  then return 1, else return 0 
+ *   Example: isLessOrEqual(4,5) = 1.
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 24
+ *   Rating: 4
+ */
+int isLessOrEqual(int x, int y) {
+  return 4;
+}
+
+//p7
+/* 
+ * logicalShift - shift x to the right by n, using a logical shift
+ *   Can assume that 0 <= n <= 31
+ *   Examples: logicalShift(0x87654321,4) = 0x08765432
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 20
+ *   Rating: 4
+ */
+int logicalShift(int x, int n) {
+  int A_shift = (x>>n);
+  int check = x & (1<<31);
+  check=check>>n<<1;
+  x=A_shift & (~check);
+  return x;
+  //return 4;
+}
+
+//P8
 /*
  * swapOddandEven - swap the odd bits and even bits in x
  *   Examples: swapOddandEven(0xAA) = 0x55
@@ -213,7 +251,7 @@ int swapOddandEven(int x) {
   //return 4;
 }
 
-//P6
+//P9
 /*
  * secondLowBit - return a mask that marks the position of the second least significant 1 bit.
  *   Examples: secondLowBit(0x00000110) = 0x00000100
@@ -224,11 +262,14 @@ int swapOddandEven(int x) {
  *   Rating: 4
  */
 int secondLowBit(int x) {
-  return 4;
+  int nagetive_one=~0;
+	int a=x&(x+nagetive_one);
+  int b=a&(a+nagetive_one);
+  return a+(~b)+1;
+  //return 4;
 }
 
-//change
-//P7
+//P10
 /* 
  * rotateNbits - rotate x to left by n bits\
  *   you can assume n >= 0
@@ -245,7 +286,7 @@ int rotateNBits(int x, int n) {
   //return 5;
 }
 
-//P8
+//P11
 /* 
  * fractions - return floor(x*7/16), for 0 <= x <= (1 << 28), x is an integer 
  *   Example: fractions(20) = 8
@@ -254,35 +295,11 @@ int rotateNBits(int x, int n) {
  *   Rating: 5
  */
 int fractions(int x) {
-  return 5;
-}
-
-//P9
-/* 
- * biggerOrEqual - if x >= y  then return 1, else return 0 
- *   Example: biggerOrEqual(4,5) = 0.
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 24
- *   Rating: 6
- */
-int biggerOrEqual(int x, int y) {
-  return 6;
+  return ((x<<2) + (x<<1) + x)>>4;
 }
 
 
-//P10
-/*
- * hdOverflow - determine if the addition of two signed 32-bit integers overflows,
- *      and return 1 if overflowing happens and 0 otherwise
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 20
- *   Rating: 6
- */
-int hdOverflow(int x,int y) {
-  return 6;
-}
-
-//P11
+//P12
 /* 
  * overflowCalc - given binary representations of three 32-bit positive numbers and add them together, 
  *      return the binary representation of the part where bits are higher than 32.
@@ -292,26 +309,39 @@ int hdOverflow(int x,int y) {
  *   Rating: 7 
  */
 int overflowCalc(int x, int y, int z) {
-  return 7;
-}
-
-//P12
-/* 
- * mul7 - return x*7, and if x*7 overflow, change the result to 
- * INT_MAX(0x7fffffff) or INT_MIN(0x80000000) correspondingly
- *   Examples: mul7(1) = 0x7, mul7(0x7ffffff0) = 0x7fffffff
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 30
- *   Rating: 8
- */
-int mul7(int x) {
-  int mul7 = x<<2 + x<<1 + x;
-  int overflow = (x^mul7)>>31;
-  int INT_MAX = 0x7f<<24|0xff<<16|0xff<<8|0xff;
-  return (mul7 & ~overflow) | ((x^INT_MAX) & overflow);
+  int a=(0xff<<8)+0xff;
+  int high_x=(x>>16)&a;
+  int high_y=(y>>16)&a;
+  int high_z=(z>>16)&a;
+  int low_x=x&a;
+  int low_y=y&a;
+  int low_z=z&a;
+  int num1=low_x+low_y+low_z;
+  int carry=num1>>16;
+  int high=high_x+high_y+high_z+carry;
+  int overflow=high>>16;
+  return overflow;
+  //return 7;
 }
 
 //P13
+/* 
+ * mul7 - return x*3, and if x*3 overflow, change the result to 
+ * INT_MAX(0x7fffffff) or INT_MIN(0x80000000) correspondingly
+ *   Examples: mul7(1) = 0x7, mul7(0x7ffffff0) = 0x7fffffff
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 36
+ *   Rating: 8
+ */
+int mul3(int x) {
+  int mul2 = (x<<1);
+  int mul3 = mul2 +x;
+  int overflow = ((x^mul3)|(x^mul2))>>31;
+  int INT_MAX = 0x7f<<24|0xff<<16|0xff<<8|0xff;
+  return (mul3 & ~overflow) | (((x>>31)^INT_MAX) & overflow);
+}
+
+//P14
 /* 
  * float_abs - Return bit-level equivalent of expression |f| (absolute value of f) for
  *   floating point argument f.
@@ -324,11 +354,49 @@ int mul7(int x) {
  *   Rating: 3
  */
 unsigned float_abs(unsigned uf) {
-  return 3;
+  int a=0xff<<23;
+  int exp=(uf&a)>>23;
+  int b=(0xff<<15)+(0xff<<7)+7;
+  int f=uf&b;
+  if(exp==0xff&&f!=0)
+    return uf;
+  else
+    return uf&(~(1<<31));
+  //return 3;
 }
 
+//p15
+/* 
+ * float_half - Return bit-level equivalent of expression f/2 for
+ *   floating point argument f.
+ *   Both the argument and result are passed as unsigned int's, but
+ *   they are to be interpreted as the bit-level representation of
+ *   single-precision floating point values.
+ *   When argument is NaN, return argument
+ *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
+ *   Max ops: 32
+ *   Rating: 4
+ */
+unsigned float_half(unsigned f) {
+    int sign = f & 0x80000000; 
+    int exponent = (f & 0x7F800000) >> 23; 
+    int fraction = f & 0x007FFFFF; 
 
-//P14
+    if (exponent == 0) {
+        fraction = (fraction>>1) + (((fraction&2)>>1)&fraction&1);
+    } else if (exponent == 255) {
+        return f;
+    } else {
+        exponent--;
+        if (exponent == 0) {
+          fraction = 0x800000|fraction;
+          fraction = (fraction>>1) + (((fraction&2)>>1)&fraction&1);
+        }
+    }
+    return sign | (exponent << 23) | fraction;
+}
+
+//P16
 /* 
  * float_i2f - Return bit-level equivalent of expression (float) x
  *   Result is returned as unsigned int, but
@@ -339,17 +407,62 @@ unsigned float_abs(unsigned uf) {
  *   Rating: 7
  */
 unsigned float_i2f(int x) {
-  return 7;
+  int sign=x&0x80000000;
+  int digit=x&0x7fffffff;
+  int val;
+  int exp=0;
+  int temp_val;
+  int lower_part;
+  int comparison;
+  int carry;
+  int fraction;
+  if(x==0x80000000)
+    return 0xcf000000;
+  if(x==0)
+    return 0;
+
+  if(sign==0x80000000)
+    val=((~digit)&0x7fffffff)+1;
+  else
+    val=digit;
+  
+  temp_val=val;
+  while(temp_val!=0){
+    temp_val=temp_val>>1;
+    exp++;
+    if(temp_val==0) exp--;
+  }
+
+  if(exp>23){
+    lower_part=val&(~(0xfffffffe<<(exp-24)));
+    lower_part=lower_part<<1;
+    comparison=(1<<(exp-23))+!(val&(1<<(exp-23)));
+    carry = lower_part >= comparison;
+    val=(val>>(exp-23))+carry;
+    if(val>=0x1000000){
+      exp+=1;
+    }
+  }
+  else
+    val=val<<(23-exp);
+
+  fraction=val&0x7fffff;
+  exp+=127;
+  exp=(exp<<23);
+  return sign|exp|fraction;
+  //return 7;
 }
 
-//P15
+
+//challange
+
+//P17
 /*
  * oddParity - return the odd parity bit of x, that is, 
  *      when the number of 1s in the binary representation of x is even, then the return 1, otherwise return 0.
  *   Examples:oddParity(5) = 1, oddParity(7) = 0
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 56
- *   Challenge: You will get 1 extra point if you use less than or equal to 34 ops
  *   Rating: 2
  */
 int oddParity(int x) {
@@ -377,159 +490,14 @@ int oddParity(int x) {
   return !f;
 }
 
-//1
-/* 
- * bitNor - ~(x|y) using only ~ and & 
- *   Example: bitNor(4, 5) = -6, bitNor(-1,-2) = 0
- *   Legal ops: ~ &
- *   Max ops: 8
- *   Rating: 1
- */
-int bitNor(int x, int y) {
-	return 2;
-}
-
-//2
-/* 
- * tmin - return minimum two's complement integer 
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 4
- *   Rating: 1
- */
-int tmin(void) {
-  return 2;
-}
-
-//3
-/*
- * absVal - return the absolute value of x
- *   Examples: absVal(-10) = 10
- *			   absVal(5) = 5
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 6
- *   Rating: 2
- */
-int absVal(int x){
-    return 2;
-}
-
-//4
-/*
- * leastBitPos - return a mask that marks the position of the least significant 1 bit.
- *   Examples: leastBitPos(12) = 4
- *			       leastBitPos(-2) = 2
- *             leastBitPos(0)  = 0
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 6
- *   Rating: 2
- */
-int leastBitPos(int x) {
-	return 2;
-}
-
-//5
-/*
- * greatestBitPos - return a mask that marks the position of the greatest significant 1 bit.
- *   Example: greatestBitPos(12) = 8
- *            greatestBitPos(-2) = -2147483648
- *            greatestBitPos(0)  = 0
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 60
- *   Rating: 4
- */
-int greatestBitPos(int x) {
-  return 2;
-}
-
-//6
-/* 
- * isLessOrEqual - if x <= y  then return 1, else return 0 
- *   Example: isLessOrEqual(4,5) = 1.
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 24
- *   Rating: 3
- */
-int isLessOrEqual(int x, int y) {
-  return 2;
-}
-
-//7
-/* 
- * multSevenSixteens - return floor(x*7/16), for 0 <= x, x is an integer 
- *   Example: multFiveEighths(10) = 4
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 12
- *   Rating: 3
- */
-int multSevenSixteens(int x) {
-  return 2;
-}
-
-//8
+//p18
 /*
  * bitCount - returns count of number of 1's in word
  *   Examples: bitCount(5) = 2, bitCount(7) = 3
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 40
- *   Rating: 4
- */
-int bitCount(int x) {
-  return 2;
-}
-
-//9
-/* 
- * logicalShift - shift x to the right by n, using a logical shift
- *   Can assume that 0 <= n <= 31
- *   Examples: logicalShift(0x87654321,4) = 0x08765432
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 20
- *   Rating: 3 
- */
-int logicalShift(int x, int n) {
-  return 2;
-}
-
-//10
-/*
- * minusOne - return a value of -1
- *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 2
- *   Rating: 1
- */
-int minusOne(void){
-	return 2;
-}
-
-//float
-//11
-/* 
- * float_neg - Return bit-level equivalent of expression -f for
- *   floating point argument f.
- *   Both the argument and result are passed as unsigned int's, but
- *   they are to be interpreted as the bit-level representations of
- *   single-precision floating point values.
- *   When argument is NaN, return argument.
- *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
- *   Max ops: 10
  *   Rating: 2
  */
-unsigned float_neg(unsigned uf) {
-  return 2;
-}
-
-//13
-/* 
- * float_twice - Return bit-level equivalent of expression 2*f for
- *   floating point argument f.
- *   Both the argument and result are passed as unsigned int's, but
- *   they are to be interpreted as the bit-level representation of
- *   single-precision floating point values.
- *   When argument is NaN, return argument
- *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
- *   Max ops: 30
- *   Rating: 4
- */
-unsigned float_twice(unsigned uf) {
-  return 2;
+int bitCount(int x) {
+  return 4;
 }
