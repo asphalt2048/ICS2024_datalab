@@ -136,7 +136,6 @@ NOTES:
 #endif
 #include "bits.h"
 
-
 //P1
 /* 
  * tconst - return a constant value 0xFFFFFFE0
@@ -376,4 +375,161 @@ int oddParity(int x) {
   b=(c>>1)&1;
   f=(a^b);
   return !f;
+}
+
+//1
+/* 
+ * bitNor - ~(x|y) using only ~ and & 
+ *   Example: bitNor(4, 5) = -6, bitNor(-1,-2) = 0
+ *   Legal ops: ~ &
+ *   Max ops: 8
+ *   Rating: 1
+ */
+int bitNor(int x, int y) {
+	return 2;
+}
+
+//2
+/* 
+ * tmin - return minimum two's complement integer 
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 4
+ *   Rating: 1
+ */
+int tmin(void) {
+  return 2;
+}
+
+//3
+/*
+ * absVal - return the absolute value of x
+ *   Examples: absVal(-10) = 10
+ *			   absVal(5) = 5
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 6
+ *   Rating: 2
+ */
+int absVal(int x){
+    return 2;
+}
+
+//4
+/*
+ * leastBitPos - return a mask that marks the position of the least significant 1 bit.
+ *   Examples: leastBitPos(12) = 4
+ *			       leastBitPos(-2) = 2
+ *             leastBitPos(0)  = 0
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 6
+ *   Rating: 2
+ */
+int leastBitPos(int x) {
+	return 2;
+}
+
+//5
+/*
+ * greatestBitPos - return a mask that marks the position of the greatest significant 1 bit.
+ *   Example: greatestBitPos(12) = 8
+ *            greatestBitPos(-2) = -2147483648
+ *            greatestBitPos(0)  = 0
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 60
+ *   Rating: 4
+ */
+int greatestBitPos(int x) {
+  return 2;
+}
+
+//6
+/* 
+ * isLessOrEqual - if x <= y  then return 1, else return 0 
+ *   Example: isLessOrEqual(4,5) = 1.
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 24
+ *   Rating: 3
+ */
+int isLessOrEqual(int x, int y) {
+  return 2;
+}
+
+//7
+/* 
+ * multSevenSixteens - return floor(x*7/16), for 0 <= x, x is an integer 
+ *   Example: multFiveEighths(10) = 4
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 12
+ *   Rating: 3
+ */
+int multSevenSixteens(int x) {
+  return 2;
+}
+
+//8
+/*
+ * bitCount - returns count of number of 1's in word
+ *   Examples: bitCount(5) = 2, bitCount(7) = 3
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 40
+ *   Rating: 4
+ */
+int bitCount(int x) {
+  return 2;
+}
+
+//9
+/* 
+ * logicalShift - shift x to the right by n, using a logical shift
+ *   Can assume that 0 <= n <= 31
+ *   Examples: logicalShift(0x87654321,4) = 0x08765432
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 20
+ *   Rating: 3 
+ */
+int logicalShift(int x, int n) {
+  return 2;
+}
+
+//10
+/*
+ * minusOne - return a value of -1
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 2
+ *   Rating: 1
+ */
+int minusOne(void){
+	return 2;
+}
+
+//float
+//11
+/* 
+ * float_neg - Return bit-level equivalent of expression -f for
+ *   floating point argument f.
+ *   Both the argument and result are passed as unsigned int's, but
+ *   they are to be interpreted as the bit-level representations of
+ *   single-precision floating point values.
+ *   When argument is NaN, return argument.
+ *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
+ *   Max ops: 10
+ *   Rating: 2
+ */
+unsigned float_neg(unsigned uf) {
+  return 2;
+}
+
+//13
+/* 
+ * float_twice - Return bit-level equivalent of expression 2*f for
+ *   floating point argument f.
+ *   Both the argument and result are passed as unsigned int's, but
+ *   they are to be interpreted as the bit-level representation of
+ *   single-precision floating point values.
+ *   When argument is NaN, return argument
+ *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
+ *   Max ops: 30
+ *   Rating: 4
+ */
+unsigned float_twice(unsigned uf) {
+  return 2;
 }

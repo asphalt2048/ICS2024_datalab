@@ -122,3 +122,75 @@ int test_oddParity(int x){
   }
   return answer%2?0:1;
 }
+
+int test_bitNor(int x, int y){
+  return ~(x|y);
+}
+
+int test_tmin(void) {
+  return 0x80000000;
+}
+
+int test_absVal(int x){
+  return x<0?-x:x;
+}
+
+int test_leastBitPos(int x){
+  return x&-x;
+}
+
+int test_greatestBitPos(int x){
+  if(!x)return 0;
+  for(int i=1;;i<<=1){
+    if(x&i){
+      x-=i;
+      if(!x)return i;
+    }
+  }
+  return -1;
+}
+
+int test_isLessOrEqual(int x, int y){
+  return x <= y;
+}
+
+int test_multSevenSixteens(int x){
+  int low = x & 15;
+  return (x >> 4) * 7 + ((low * 7) >> 4);
+}
+
+int test_bitCount(int x) {
+  int result = 0;
+  int i;
+  for (i = 0; i < 32; i++)
+    result += (x >> i) & 0x1;
+  return result;
+}
+
+int test_logicalShift(int x, int n) {
+  unsigned u = (unsigned) x;
+  unsigned shifted = u >> n;
+  return (int) shifted;
+}
+
+int test_minusOne(void){
+  return -1;
+}
+
+unsigned test_float_neg(unsigned uf) {
+    float f = u2f(uf);
+    float nf = -f;
+    if (isnan(f))
+ return uf;
+    else
+ return f2u(nf);
+}
+
+unsigned test_float_twice(unsigned uf) {
+  float f = u2f(uf);
+  float tf = 2*f;
+  if (isnan(f))
+    return uf;
+  else
+    return f2u(tf);
+}

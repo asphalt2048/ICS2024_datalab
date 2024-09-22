@@ -13,6 +13,18 @@ int partialFill(int l, int h);
 unsigned float_abs(unsigned uf);
 unsigned float_i2f(int x);
 int oddParity(int x);
+int bitNor(int x, int y);
+int tmin(void);
+int absVal(int x);
+int leastBitPos(int x);
+int greatestBitPos(int x);
+int isLessOrEqual(int x, int y);
+int multSevenSixteens(int x);
+int bitCount(int x);
+int logicalShift(int x, int n);
+int minusOne(void);
+unsigned float_neg(unsigned uf);
+unsigned float_twice(unsigned uf)
 
 int test_tconst(void);
 int test_bitNand(int x, int y);
@@ -29,3 +41,15 @@ int test_partialFill(int l, int h);
 unsigned test_float_abs(unsigned uf);
 unsigned test_float_i2f(int x);
 int test_oddParity(int x);
+int test_bitNor(int x, int y);
+int test_tmin(void);
+int test_absVal(int x);
+int test_leastBitPos(int x);
+int test_greatestBitPos(int x);
+int test_isLessOrEqual(int x, int y);
+int test_multSevenSixteens(int x);
+int test_bitCount(int x);
+int test_logicalShift(int x, int n);
+int test_minusOne(void);
+unsigned test_float_neg(unsigned uf);
+unsigned test_float_twice(unsigned uf)
