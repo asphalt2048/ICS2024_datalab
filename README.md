@@ -18,7 +18,7 @@ CSAPP 第一章配套实验。
 
 ```shell
 git clone xxx
-cd datalab-handout
+cd datalab
 ```
 
 #### （2）准备工作
@@ -96,7 +96,7 @@ sudo apt install gcc-multilib
 
 ##### 确保dlc（data lab compiler）能正常执行
 
-依然在 `datalab-handout/`  目录下，
+依然在 `datalab/`  目录下，
 
 执行：
 
@@ -170,7 +170,7 @@ sudo apt install gcc-multilib
 
 * 你在终端中执行 `./dlc -e bits.c` 后的截图。
 * 你在终端中执行 `./btest` 后的截图。
-* 描述你实现每个函数的思路，要求简结清晰。
+* 描述你实现每个函数的思路，要求简洁清晰，只要能体现出核心的思路就可以了。
 * 如果有，请务必在报告中列出引用的内容以及参考的资料。
 * 对本实验的感受（可选）。
 * 对助教们的建议（可选）。
