@@ -174,7 +174,7 @@ int getByte(int x,int n) {
 
 // P4
 /* 
- * roundUp - round up x to the nearest multiple of 256
+ * roundUp - round up x to the nearest multiple of 256 that is bigger than x
  *   Example: roundUp(0x117f) = 0x1200
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 8
@@ -353,7 +353,7 @@ unsigned float_i2f(int x) {
 /*
  * oddParity - return the odd parity bit of x, that is, 
  *      when the number of 1s in the binary representation of x is even, then the return 1, otherwise return 0.
- *   Examples:oddParity(5) = 1, oddParity(7) = 0
+ *   Examples: oddParity(5) = 1, oddParity(7) = 0
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 56
  *   Rating: 2
@@ -364,7 +364,7 @@ int oddParity(int x) {
 
 // P18
 /*
- * bitCount - returns count of number of 1's in word
+ * bitCount - return count of number of 1's in the binary representation of x
  *   Examples: bitCount(5) = 2, bitCount(7) = 3
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 40
