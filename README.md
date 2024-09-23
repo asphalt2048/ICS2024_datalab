@@ -14,11 +14,11 @@ CSAPP 第一章配套实验。
 
 #### （1）下载
 
-从 `github classroom` 拉取`datalab-handout` 文件夹，其中的内容就是本次实验用到的的文件了，拉取指令如下：
+从 `github classroom` 拉取`ICS2024_datalab` 文件夹，其中的内容就是本次实验用到的的文件了，拉取指令如下：
 
 ```shell
 git clone xxx
-cd datalab-handout
+cd ICS2024_datalab
 ```
 
 #### （2）准备工作
@@ -61,7 +61,7 @@ sudo apt-get install libc6 libc6-dev libc6-dev-i386
 
 ##### 确保实验文件能正常 make 并运行测试
 
-在终端中进入 `datalab-handout/`  文件夹目录。
+在终端中进入 `datalab/`  文件夹目录。
 
 键入 `ls` 查看内容，你应当看到如下文件：
 
@@ -78,7 +78,7 @@ make all
 ./btest
 ```
 
-如果过程顺利，最后会输出测试结果，最后一行为 `Total points: 0/49` 。
+如果过程顺利，最后会输出测试结果，最后一行为 `Total points: 0/69` 。
 
 如果过程中出现如下报错：
 
@@ -103,6 +103,12 @@ sudo apt install gcc-multilib
 ```shell
 ./dlc bits.c
 ```
+
+如果遇到`./dlc: Permission denied`，说明没有当前文件的执行权限，执行:
+```shell
+chmod +x dlc
+```
+增加执行权限。
 
 如果执行立即结束并且没有任何反馈，则没有问题。
 
@@ -205,7 +211,7 @@ git push
 
 * http://csapp.cs.cmu.edu/3e/labs.html （lab来源，本实验相较原文件有改动）
 
-* 本文档编写时参考了22年的实验文档 。
+* 本文档编写时参考了22,23年的实验文档 。
 
 * 负责助教:
   * 伊凡 21307130047@m.fudan.edu.cn

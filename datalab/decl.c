@@ -13,6 +13,24 @@ test_rec test_set[] = {
  {"tmax", (funct_t) tmax, (funct_t) test_tmax, 0, "! ~ & ^ | + << >>", 2, 1,
   {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
 
+ {"bitNor", (funct_t) bitNor, (funct_t) test_bitNor, 2, "& ~", 8, 2,
+  {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
+
+ {"bitCount", (funct_t) bitCount, (funct_t) test_bitCount, 1, "! ~ & ^ | + << >>", 40, 2,
+  {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
+
+ {"absVal", (funct_t) absVal, (funct_t) test_absVal, 1,
+    "! ~ & ^ | + << >>", 6, 3,
+  {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
+
+ {"logicalShift", (funct_t) logicalShift, (funct_t) test_logicalShift, 2,
+    "! ~ & ^ | + << >>", 20, 4,
+  {{TMin, TMax},{0,31},{TMin,TMax}}},
+
+ {"isLessOrEqual", (funct_t) isLessOrEqual, (funct_t) test_isLessOrEqual, 2,
+    "! ~ & ^ | + << >>", 24, 4,
+  {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
+
  {"getByte", (funct_t) getByte, (funct_t) test_getByte, 2,
     "! ~ & ^ | + << >>", 6, 2,
   {{TMin, TMax},{0,3},{TMin,TMax}}},

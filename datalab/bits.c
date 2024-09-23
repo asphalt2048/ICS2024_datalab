@@ -144,7 +144,7 @@ NOTES:
  *   Rating: 1
  */
 int tmax(void) {
-  return ~(1<<31);
+  return 1;
 }
 
 //p2
@@ -156,7 +156,7 @@ int tmax(void) {
  *   Rating: 2
  */
 int bitNor(int x, int y) {
-	return (~x)&(~y);
+	return 2;
 }
 
 //P3
@@ -169,8 +169,7 @@ int bitNor(int x, int y) {
  *   Rating: 2
  */
 int getByte(int x,int n) {
-  return (x>>(n<<3))&0xff;
-  //return 2;
+  return 3;
 }
 
 //P4
@@ -182,8 +181,7 @@ int getByte(int x,int n) {
  *   Rating: 3
  */
 int roundUp(int x) {
-      return (x+(0xff)) & ~0xff;
-    //return 3;
+  return 4;
 }
 
 //p5
@@ -196,8 +194,7 @@ int roundUp(int x) {
  *   Rating: 3
  */
 int absVal(int x){
-    return (x^(x>>31))+((x>>31)&1);
-    //return 3;
+  return 5;
 }
 
 //p6
@@ -209,7 +206,7 @@ int absVal(int x){
  *   Rating: 4
  */
 int isLessOrEqual(int x, int y) {
-  return 4;
+  return 6;
 }
 
 //p7
@@ -222,12 +219,7 @@ int isLessOrEqual(int x, int y) {
  *   Rating: 4
  */
 int logicalShift(int x, int n) {
-  int A_shift = (x>>n);
-  int check = x & (1<<31);
-  check=check>>n<<1;
-  x=A_shift & (~check);
-  return x;
-  //return 4;
+  return 7;
 }
 
 //P8
@@ -239,16 +231,7 @@ int logicalShift(int x, int n) {
  *   Rating: 4
  */
 int swapOddandEven(int x) {
-  
-  int mask1 = 0x55;
-  int mask2 = 0xAA;
-  mask1 = mask1|mask1<<8;
-  mask1 = mask1|mask1<<16;
-  mask2 = mask2|mask2<<8;
-  mask2 = mask2|mask2<<16; 
-  return ((x&mask1)<<1)|((x&mask2)>>1);
-  
-  //return 4;
+  return 8;
 }
 
 //P9
@@ -262,11 +245,7 @@ int swapOddandEven(int x) {
  *   Rating: 4
  */
 int secondLowBit(int x) {
-  int nagetive_one=~0;
-	int a=x&(x+nagetive_one);
-  int b=a&(a+nagetive_one);
-  return a+(~b)+1;
-  //return 4;
+  return 9;
 }
 
 //P10
@@ -279,11 +258,7 @@ int secondLowBit(int x) {
  *   Rating: 5
  */
 int rotateNBits(int x, int n) {
-  
-  n = n&(0x1f);
-  return (x << n) | (x >> (33 + ~n));  //33 + ~n equals to "32 - n"
-  
-  //return 5;
+  return 10;
 }
 
 //P11
@@ -295,7 +270,7 @@ int rotateNBits(int x, int n) {
  *   Rating: 5
  */
 int fractions(int x) {
-  return ((x<<2) + (x<<1) + x)>>4;
+  return 11;
 }
 
 
@@ -309,19 +284,7 @@ int fractions(int x) {
  *   Rating: 7 
  */
 int overflowCalc(int x, int y, int z) {
-  int a=(0xff<<8)+0xff;
-  int high_x=(x>>16)&a;
-  int high_y=(y>>16)&a;
-  int high_z=(z>>16)&a;
-  int low_x=x&a;
-  int low_y=y&a;
-  int low_z=z&a;
-  int num1=low_x+low_y+low_z;
-  int carry=num1>>16;
-  int high=high_x+high_y+high_z+carry;
-  int overflow=high>>16;
-  return overflow;
-  //return 7;
+  return 12;
 }
 
 //P13
@@ -334,11 +297,7 @@ int overflowCalc(int x, int y, int z) {
  *   Rating: 8
  */
 int mul3(int x) {
-  int mul2 = (x<<1);
-  int mul3 = mul2 +x;
-  int overflow = ((x^mul3)|(x^mul2))>>31;
-  int INT_MAX = 0x7f<<24|0xff<<16|0xff<<8|0xff;
-  return (mul3 & ~overflow) | (((x>>31)^INT_MAX) & overflow);
+  return 13;
 }
 
 //P14
@@ -354,15 +313,7 @@ int mul3(int x) {
  *   Rating: 3
  */
 unsigned float_abs(unsigned uf) {
-  int a=0xff<<23;
-  int exp=(uf&a)>>23;
-  int b=(0xff<<15)+(0xff<<7)+7;
-  int f=uf&b;
-  if(exp==0xff&&f!=0)
-    return uf;
-  else
-    return uf&(~(1<<31));
-  //return 3;
+  return 14;
 }
 
 //p15
@@ -378,22 +329,7 @@ unsigned float_abs(unsigned uf) {
  *   Rating: 4
  */
 unsigned float_half(unsigned f) {
-    int sign = f & 0x80000000; 
-    int exponent = (f & 0x7F800000) >> 23; 
-    int fraction = f & 0x007FFFFF; 
-
-    if (exponent == 0) {
-        fraction = (fraction>>1) + (((fraction&2)>>1)&fraction&1);
-    } else if (exponent == 255) {
-        return f;
-    } else {
-        exponent--;
-        if (exponent == 0) {
-          fraction = 0x800000|fraction;
-          fraction = (fraction>>1) + (((fraction&2)>>1)&fraction&1);
-        }
-    }
-    return sign | (exponent << 23) | fraction;
+  return 15;
 }
 
 //P16
@@ -407,50 +343,7 @@ unsigned float_half(unsigned f) {
  *   Rating: 7
  */
 unsigned float_i2f(int x) {
-  int sign=x&0x80000000;
-  int digit=x&0x7fffffff;
-  int val;
-  int exp=0;
-  int temp_val;
-  int lower_part;
-  int comparison;
-  int carry;
-  int fraction;
-  if(x==0x80000000)
-    return 0xcf000000;
-  if(x==0)
-    return 0;
-
-  if(sign==0x80000000)
-    val=((~digit)&0x7fffffff)+1;
-  else
-    val=digit;
-  
-  temp_val=val;
-  while(temp_val!=0){
-    temp_val=temp_val>>1;
-    exp++;
-    if(temp_val==0) exp--;
-  }
-
-  if(exp>23){
-    lower_part=val&(~(0xfffffffe<<(exp-24)));
-    lower_part=lower_part<<1;
-    comparison=(1<<(exp-23))+!(val&(1<<(exp-23)));
-    carry = lower_part >= comparison;
-    val=(val>>(exp-23))+carry;
-    if(val>=0x1000000){
-      exp+=1;
-    }
-  }
-  else
-    val=val<<(23-exp);
-
-  fraction=val&0x7fffff;
-  exp+=127;
-  exp=(exp<<23);
-  return sign|exp|fraction;
-  //return 7;
+  return 16;
 }
 
 
@@ -466,28 +359,7 @@ unsigned float_i2f(int x) {
  *   Rating: 2
  */
 int oddParity(int x) {
-  int a=(x>>24)&0xff;
-  int b=(x>>16)&0xff;
-  int c=(x>>8)&0xff;
-  int d=x&0xff;
-
-  int e=(a^b);
-  int f=(c^d);
-
-  int g=(e^f);
-
-  a=g&0xf;
-  b=(g>>4)&0xf;
-  a=(a^b);
-
-  c=a&0x3;
-  d=(a>>2)&0x3;
-  c=(c^d);
-  
-  a=c&1;
-  b=(c>>1)&1;
-  f=(a^b);
-  return !f;
+  return 17;
 }
 
 //p18
@@ -499,5 +371,5 @@ int oddParity(int x) {
  *   Rating: 2
  */
 int bitCount(int x) {
-  return 4;
+  return 18;
 }
