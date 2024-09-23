@@ -1,6 +1,6 @@
 ## ICS2024 Lab1-DataLab
 
-> Deadline: 
+> Deadline: 2024.10.10 8:00AM
 
 ### 一、实验简介
 
