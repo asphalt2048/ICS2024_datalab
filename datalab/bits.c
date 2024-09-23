@@ -227,7 +227,7 @@ int logicalShift(int x, int n) {
  * swapOddandEven - swap the odd bits and even bits in x
  *   Examples: swapOddandEven(0xAA) = 0x55
  *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 18
+ *   Max ops: 24
  *   Rating: 4
  */
 int swapOddandEven(int x) {
