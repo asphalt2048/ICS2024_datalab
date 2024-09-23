@@ -51,14 +51,15 @@ int test_roundUp(int x){
 }
 
 int test_swapOddandEven(int x){
-  int mask1 = 0xAAAAAAAA;
-  int mask2 = 0x55555555;
-  int even_bits = x & mask1;
-  int odd_bits = x & mask2;
-    
-  even_bits >>= 1;
-  odd_bits <<= 1; 
-  return even_bits | odd_bits;
+    int result = 0;
+    for (int i = 0; i < 32; i += 2) {
+        unsigned int evenBit = (x >> i) & 1;
+        unsigned int oddBit = (x >> (i + 1)) & 1;
+        
+        result |= (evenBit << (i + 1));
+        result |= (oddBit << i);
+    }
+    return result;
 }
 
 int test_rotateNBits(int x, int n){
