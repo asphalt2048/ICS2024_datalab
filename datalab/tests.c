@@ -65,7 +65,7 @@ int test_swapOddandEven(int x){
 int test_rotateNBits(int x, int n){
   n = n%32;
   int left_part = x<<n;
-  int right_part = x>>(32 - n);
+  int right_part = (unsigned int)x>>(32 - n);
   return (left_part|right_part);
 }
 
