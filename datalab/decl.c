@@ -56,7 +56,7 @@ test_rec test_set[] = {
     "! ~ & ^ | + << >>", 30, 7,
   {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
 
- {"mul7", (funct_t) mul3, (funct_t) test_mul3, 1,
+ {"mul3", (funct_t) mul3, (funct_t) test_mul3, 1,
     "! ~ & ^ | + << >>", 30, 7,
   {{TMin, TMax},{TMin,TMax},{TMin,TMax}}},
 
