@@ -289,12 +289,12 @@ int overflowCalc(int x, int y, int z) {
 
 // P13
 /* 
- * mul7 - return x*3, and if x*3 overflow, change the result to 
+ * mul3 - return x*3, and if x*3 overflow, change the result to 
  * INT_MAX(0x7fffffff) or INT_MIN(0x80000000) correspondingly
- *   Examples: mul7(1) = 0x7, mul7(0x7ffffff0) = 0x7fffffff
+ *   Examples: mul3(1) = 0x3, mul3(0x7ffffff0) = 0x7fffffff
  *   Legal ops: ! ~ & ^ | + << >>
  *   Max ops: 36
- *   Rating: 8
+ *   Rating: 7
  */
 int mul3(int x) {
   return 13;
