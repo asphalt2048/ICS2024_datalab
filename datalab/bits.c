@@ -254,7 +254,7 @@ int secondLowBit(int x) {
  *   you can assume n >= 0
  *   Examples: rotateNbits(0x12345678, 8) = 0x34567812
  *   Legal ops: ! ~ & ^ | + << >>
- *   Max ops: 10
+ *   Max ops: 16
  *   Rating: 5
  */
 int rotateNBits(int x, int n) {
